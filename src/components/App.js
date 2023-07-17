@@ -1,15 +1,25 @@
 import React from "react";
+import { Route, Switch, useHistory } from 'react-router-dom';
+
+import * as auth from "../utils/auth";
+import api from "../utils/Api";
 
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+
 import ImagePopup from "./ImagePopup";
-import api from "../utils/Api";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
+import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
 
 
 function App() {
