@@ -53,3 +53,9 @@
 @import url(./blocks/popup/__content-image/popup__content-image.css);
 @import url(./blocks/popup/__link-image/popup__link-image.css);
 @import url(./blocks/popup/__name-image/popup__name-image.css);
+
+@import url(./blocks/auth/auth.css);
+@import url(./blocks/auth/__title/auth__title.css);
+@import url(./blocks/auth/__form/auth__form.css);
+@import url(./blocks/auth/__login-hint/auth__login-hint.css);
+@import url(./blocks/auth/__error/auth__error.css);
