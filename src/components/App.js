@@ -34,6 +34,11 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isRegistrationSuccessful, setIsRegistrationSuccessful] = React.useState(false);
+  const [authorizationEmail, setAuthorizationEmail] = React.useState('');
+
+
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userData, initialCards]) => {

@@ -5,18 +5,18 @@ const InfoTooltip = ({ isOpen, onClose, isSuccess }) => {
   return (
     <div className={`popup ${isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__container">
-        <button type="button" className="popup__close" onClick={onClose} />
+        <button type="button" className="popup__close-button" onClick={onClose} />
         <img
           src={isSuccess ? successIcon : unsuccessIcon}
           alt={
-            isSuccess ? 'Регистрация прошла успешно' : 'Регистрация не прошла'
+            isSuccess ? 'Регистрация прошла успешно' : 'Ошибка регистрации'
           }
           className="popup__signup-icon"
         />
         <h3 className="popup__signup-title">
           {isSuccess
-            ? 'Вы успешно зарегистрировались!'
-            : 'Что-то пошло не так! Попробуйте ещё раз.'}
+            ? 'Вы зарегистрированы!'
+            : 'Ошибка! Попробуйте ещё раз.'}
         </h3>
       </div>
     </div>
