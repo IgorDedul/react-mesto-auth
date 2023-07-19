@@ -20,7 +20,7 @@ const Register = ({ onRegister }) => {
             type="email"
             placeholder="Email"
             autoComplete="email"
-            value={enteredValues.email}
+            value={enteredValues.email || ''}
             onChange={handleChange}
             required
           />
@@ -32,7 +32,7 @@ const Register = ({ onRegister }) => {
             minLength="8"
             placeholder="Пароль"
             autoComplete="password"
-            value={enteredValues.password}
+            value={enteredValues.password || ''}
             onChange={handleChange}
             required
           />
