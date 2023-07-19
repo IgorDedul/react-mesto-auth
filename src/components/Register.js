@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import useForm from '../hooks/useForm';
+import useFormValidation from '../hooks/useFormValidation';
 
 const Register = ({ onRegister }) => {
-  const { enteredValues, errors, handleChange } = useForm();
+  const { enteredValues, errors, handleChange } = useFormValidation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,7 +13,7 @@ const Register = ({ onRegister }) => {
     <>
       <div className="auth">
         <h2 className="auth__title">Регистрация</h2>
-        <form className="form auth__form" onSubmit={handleSubmit}>
+        <form className="popup__input-list auth__form" onSubmit={handleSubmit}>
           <input
             id="email"
             name="email"
@@ -24,7 +24,7 @@ const Register = ({ onRegister }) => {
             onChange={handleChange}
             required
           />
-          <span className="auth__error">{errors.email}</span>
+          <span className="popup__input-error auth__error">{errors.email}</span>
           <input
             id="password"
             name="password"
@@ -36,7 +36,7 @@ const Register = ({ onRegister }) => {
             onChange={handleChange}
             required
           />
-          <span className="auth__error">{errors.password}</span>
+          <span className="popup__input-error auth__error">{errors.password}</span>
           <button type="submit">Зарегистрироваться</button>
         </form>
       </div>

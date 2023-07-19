@@ -9,7 +9,6 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, onLoading}) => {
     // Переменные с стейтами имени и информации о пользователе
     const [name, setName] = React.useState('');
     const [description, setDescription] = React.useState('');
-  
  
     // После загрузки текущего пользователя из API
     // его данные будут использованы в управляемых компонентах.

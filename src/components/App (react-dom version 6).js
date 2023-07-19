@@ -1,6 +1,5 @@
 import React from "react";
-//Работа выполнена на 5.3.0 роуте, т.к. 6-ой постоянно выдавал ошибки по дочернему useNavigate вне Route
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 
 import * as auth from "../utils/auth";
 import api from "../utils/Api";
@@ -30,19 +29,17 @@ function App() {
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = React.useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
-  
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-  
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = React.useState(false);
   const [authorizationEmail, setAuthorizationEmail] = React.useState('');
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -158,7 +155,6 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsConfirmationPopupOpen(false);
-    setIsInfoTooltipOpen(false);
     setSelectedCard({});
   };
 
@@ -169,7 +165,7 @@ function App() {
       .then((data) => {
         setIsRegistrationSuccessful(true);
         openInfoTooltip();
-        history.push('/sign-in');
+        navigate('/sign-in');
       })
       .catch((err) => {
         console.log(err);
@@ -186,7 +182,7 @@ function App() {
         setIsLoggedIn(true);
         localStorage.setItem('jwt', data.token);
         handleTokenCheck();
-        history.push('/');
+        navigate('/');
       })
       .catch((err) => {
         console.log(err);
@@ -198,7 +194,7 @@ function App() {
   const handleSignOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('jwt');
-    history.push('/sign-in');
+    navigate('/sign-in');
   };
 
   // Проверка токена
@@ -212,7 +208,7 @@ function App() {
       .then((data) => {
         setAuthorizationEmail(data.data.email);
         setIsLoggedIn(true);
-        history.push('/');
+        navigate('/');
       })
       .catch((err) => console.log(err));
   };
@@ -223,7 +219,7 @@ function App() {
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      history.push('/');
+      navigate('/');
     }
   }, [isLoggedIn]);
 
@@ -231,34 +227,32 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <div className="page">
+          
           <Header 
             loggedIn={isLoggedIn}
             userEmail={authorizationEmail}
             onSignOut={handleSignOut}
           />
           
-          <Switch>
-          <Route path="/sign-in">
-            <Login onLogin={handleAuthorization} />
-          </Route>
-          <Route path="/sign-up">
-            <Register onRegister={handleRegistration} />
-          </Route>
-          <ProtectedRoute
-            path="/"
-            component={Main}
-            loggedIn={isLoggedIn}
-            onEditAvatar={handleEditAvatarClick}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onCardLike={handleCardLike}
-            onCardDeleteClick={handleCardDelete}
-          />
-        </Switch>
+          
+          <Routes>
+            <Route path="/sign-in" element={<Login onLogin={handleAuthorization} />}/>
+            <Route path="/sign-up" element={<Register onRegister={handleRegistration} />}/>
+            <Route path="/" element={<ProtectedRoute
+              component={Main}
+              loggedIn={isLoggedIn}
+              onEditAvatar={handleEditAvatarClick}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onCardClick={handleCardClick}
+              cards={cards}
+              onCardLike={handleCardLike}
+              onCardDeleteClick={handleCardDelete}
+            />}/>
+          </Routes>
+          
 
-         <Footer />
+          <Footer />
 
           <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
@@ -303,9 +297,9 @@ function App() {
         />
 
           <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-        </div>
+        </div>  
       </div>
-    </CurrentUserContext.Provider>    
+    </CurrentUserContext.Provider> 
   );
 }
 
